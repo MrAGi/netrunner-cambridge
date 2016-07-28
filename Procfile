@@ -1,0 +1,1 @@
+web: gunicorn netrunner.wsgi

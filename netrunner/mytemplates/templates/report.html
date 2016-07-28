@@ -1,0 +1,145 @@
+{%extends "base.html" %}
+
+{%block content%}
+<div class="row">
+    {%if not reporting_closed %}
+        <div class="small-12 columns">
+        <h1>Report Result</h1>
+        {%if errors %}
+        <h4>Error: {{errors}}</h4>
+        {%else %}
+        {%endif%}
+        <form action="/processreport/" method="post">{% csrf_token %}
+        <div class="row">
+            <div class="small-6 columns">
+                <h2>Player 1</h2>
+                <select name="p1">
+                    {% for player in players1 %}
+                        {%if player and player == player.username %}
+                            <option value="{{player.player.username}}" selected>{{player.player.first_name}} {{player.player.last_name}}</option>
+                        {%else%}
+                            <option value="{{player.player.username}}">{{player.player.first_name}} {{player.player.last_name}}</option>
+                        {%endif%}
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="small-6 columns">
+                <h2>Player 2</h2>
+                <select name="p2">
+                    {% for player in players2 %}
+                        {%if player and player == player.username %}
+                            <option value="{{player.player.username}}" selected>{{player.player.first_name}} {{player.player.last_name}}</option>
+                        {%else%}
+                            <option value="{{player.player.username}}">{{player.player.first_name}} {{player.player.last_name}}</option>
+                        {%endif%}
+                    {%endfor%}
+                </select>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="small-12 medium-4 columns">
+                    <h3>Player 1 Corp</h3>
+                    <select name="p1-corp">
+                        {% for corp in corps %}
+                            {%if p1_corp and p1_corp == corp.name %}
+                            <option value="{{corp.name}}" selected>{{corp.name}}</option>
+                            {%else%}
+                            <option value="{{corp.name}}">{{corp.name}}</option>
+                            {%endif%}
+                        {%endfor%}
+                    </select>
+            </div>
+            <div class="small-1 medium-1 columns">
+            <h2>vs.</h2>
+            </div>
+            <div class="small-12 medium-4 columns">
+                <h3>Player 2 Runner</h3>
+                <select name="p2-runner">
+                    {% for runner in runners %}
+                        {%if p2_runner and p2_runner = runner.name %}
+                        <option value="{{runner.name}}" selected>{{runner.name}}</option>
+                        {%else%}
+                        <option value="{{runner.name}}">{{runner.name}}</option>
+                        {%endif%}
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="small-1 medium-1 columns">
+            <h2>=</h2>
+            </div>
+            <div class="small-12 medium-2 columns">
+                <h3>Result</h3>
+                <select name="g1">
+                    {% for win in wintypes %}
+                        {%if g1 and g1 == win.name%}
+                        <option value="{{win.name}}" selected>{{win.name}}</option>
+                        {%else%}
+                        <option value="{{win.name}}">{{win.name}}</option>
+                        {%endif%}
+                    {%endfor%}
+                </select>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="small-12 medium-4 columns">
+                    <h3>Player 1 Runner</h3>
+                    <select name="p1-runner">
+                        {% for runner in runners %}
+                            {%if p1_runner and p1_runner = runner.name %}
+                            <option value="{{runner.name}}" selected>{{runner.name}}</option>
+                            {%else%}
+                            <option value="{{runner.name}}">{{runner.name}}</option>
+                            {%endif%}
+                        {%endfor%}
+                    </select>
+            </div>
+            <div class="small-1 medium-1 columns">
+                <h2>vs.</h2>
+            </div>
+            <div class="small-12 medium-4 columns">
+                <h3>Player 2 Corp</h3>
+                <select name="p2-corp">
+                    {% for corp in corps %}
+                        {%if p2_corp and p2_corp == corp.name %}
+                        <option value="{{corp.name}}" selected>{{corp.name}}</option>
+                        {%else%}
+                        <option value="{{corp.name}}">{{corp.name}}</option>
+                        {%endif%}
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="small-1 medium-1 columns">
+            <h2>=</h2>
+            </div>
+            <div class="small-12 medium-2 columns">
+                <h3>Result</h3>
+                <select name="g2">
+                    {% for win in wintypes %}
+                        {%if g2 and g2 == win.name %}
+                        <option value="{{win.name}}" selected>{{win.name}}</option>
+                        {%else%}
+                        <option value="{{win.name}}">{{win.name}}</option>
+                        {%endif%}
+                    {%endfor%}
+                </select>
+            </div>
+        </div>
+        <hr/>
+        <input type="hidden" name="current-league" value="{{current_league.id}}"/>
+        <div class="row">
+            <div class="row small-12 columns">
+            <input class="button" type="submit" value="Add Result" />
+            </div>
+        </div>
+        </form>
+        </div>
+    {%else%}
+        <div class="small-12 columns">
+        <h1>Closed</h1>
+        <p>Reporting is currently closed</p>
+        </div>
+    {%endif%}
+</div>
+{%endblock%}

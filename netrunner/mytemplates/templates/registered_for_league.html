@@ -1,0 +1,15 @@
+{%extends "base.html" %}
+{% block windowtitle %}Validation Successful{% endblock %}
+{%block content %}
+<div class="row">
+    <div class="small-12 columns">
+    <h1>Registration Result</h1>
+    {%if registered %}
+    <p>Registration successful!</p>
+    {%else%}
+    <p>You have <strong>not</strong> been registered for the league - did you check the checkbox?</p>
+    {%endif%}
+    <p><a href="/players/{{player.first_name|lower}}-{{player.last_name|lower}}">Return to your profile.</a></p>
+    </div>
+</div>
+{%endblock%}

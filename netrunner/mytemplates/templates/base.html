@@ -1,0 +1,60 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% load staticfiles %}
+        <title>{% block windowtitle %}Netrunner Cambridge{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static "stylesheets/app.css" %}" />
+        <link rel="stylesheet" href="{% static "foundation-icons/foundation-icons.css" %}" />
+        <link rel="icon" type="image/png" href="{% static "netrunner-ico.png" %}"/>
+        <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="{% static "netrunner-apple.png" %}">
+        {%block styles %}{%endblock%}
+        <script src="//use.typekit.net/zqm6kih.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+    </head>
+    <body>
+        <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="/"><span class="net-title">net</span><span class="runner-title">runner</span> <span class="cambridge-title">cambridge</span></a></h1>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+        </ul>
+
+        <section class="top-bar-section">
+        <ul class="right">
+            <li><a href="http://forum.netrunner-cambridge.com">Forum</a></li>
+            {%if user.is_authenticated %}
+            <li class="has-dropdown"><a href="#">League</a>
+            <ul class="dropdown">
+                <li><a href="/report/">Report Result</a></li>
+                <li><a href="/league/">View League</a></li>
+            </ul>
+            </li>
+            {%else%}
+            <li><a href="/league/">League</a></li>
+            {%endif%}
+            {%if user.is_authenticated %}
+            <li class="has-dropdown"><a href="/players/{{user.first_name|lower}}-{{user.last_name|lower}}/">{{user.first_name}}</a>
+            <ul class="dropdown">
+                <li><a href="/players/{{user.first_name|lower}}-{{user.last_name|lower}}/">Profile</a></li>
+                <li><a href="/logout/">Logout</a></li>
+            </ul>
+            </li>
+            {%else%}
+            <li><a href="/login/">Login</a></li>
+            {%endif%}
+        </ul>
+        </section>
+        </nav>
+        {%block content %}
+        {%endblock %}
+        <script src="{% static "bower_components/modernizr/modernizr.js" %}"></script>
+        <script src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
+        <script src="{% static "bower_components/foundation/js/foundation.min.js" %}"></script>
+        <script src="{% static "js/app.js" %}"></script>
+        {%block maps %}{% endblock %}
+    </body>
+</html>

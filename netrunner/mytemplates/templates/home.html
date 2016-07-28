@@ -1,0 +1,30 @@
+{%extends "base.html" %}
+{%block styles%}
+<style type="text/css">
+      #map-canvas { height: 300px; margin: 0px; padding: 0px; margin-top: 20px;}
+</style>
+{%endblock%}
+
+{%block content %}
+{% load staticfiles %}
+<div class="row">
+    <div class="small-12 medium-9 columns">
+        <img class="welcome-img" src="{% static "welcome.jpg" %}">
+        <span class="welcome-msg">welcome</span>
+        <span class="welcome-msg-pt2">to the</span>
+        <span class="welcome-msg-pt3">cambridge <span class="runner-title">meta</span></span>
+    </div>
+    <div class="medium-3 columns">
+    <h3>Next Meet-up</h3>
+    <p><strong>{{meetup|date:"l j F Y"}}</strong> at <strong>7pm</strong> in the <a href="http://www.burleigharmscambridge.co.uk">Burleigh Arms, Cambridge</a>.</p>
+    <hr/>
+    <p>Join our <a href="http://forum.netrunner-cambridge.com">community</a> and get involved in discussing meet-ups, league nights, cards and anything else Netrunner related!</p>
+    <hr/>
+    </div>
+
+
+</div>
+
+{%endblock%}
+
+

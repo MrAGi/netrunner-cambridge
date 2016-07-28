@@ -1,0 +1,20 @@
+{%extends "base.html" %}
+
+{%block content%}
+<div class="row">
+    <div class="small-12 columns">
+    <h1>Result Added</h1>
+    <p>
+    <strong>{{player1.first_name}}</strong>  ({{p1_corp}}) vs. <strong>{{player2.first_name}}</strong> ({{p2_runner}}) - {{g1}}.
+    </p>
+    <p>
+    <strong>{{player1.first_name}}</strong>  ({{p1_runner}}) vs. <strong>{{player2.first_name}}</strong> ({{p2_corp}}) - {{g2}}.
+    <p>If there is an issue with the results entered - please contact an admin</p>
+    </div>
+</div>
+<div class="row">
+    <div class="small-12 columns">
+    <a href="/report/">Add another result</a>
+    </div>
+</div>
+{%endblock%}

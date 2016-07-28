@@ -1,0 +1,105 @@
+@import "settings";
+@import "foundation";
+
+.result-win {
+    background-color: $primary-color
+}
+
+.result-loss {
+    background-color: red
+}
+
+.runner-title {
+    color: #148604;
+    font-weight: 500
+}
+
+.net-title {
+    font-weight: 300
+}
+
+.cambridge-title {
+    font-weight: 300
+}
+
+.welcome-img {
+    margin-top: 0.75em;
+}
+
+.welcome-msg {
+    font-family: $header-font-family;
+    font-size: $h2-font-size;
+    background-color: $white;
+    color: $jet;
+    position: absolute;
+    top: 0.2em;
+    left: 0.35em;
+    padding-right: 0.2em;
+}
+
+.welcome-msg-pt2 {
+    font-family: $header-font-family;
+    font-size: $h2-font-size;
+    background-color: $white;
+    color: $jet;
+    position: absolute;
+    top: 1.6em;
+    left: 0.35em;
+    padding-right: 0.2em;
+    padding-left: 0.2em;
+}
+
+.welcome-msg-pt3 {
+    font-family: $header-font-family;
+    font-size: $h2-font-size;
+    background-color: $white;
+    color: $jet;
+    position: absolute;
+    top: 2.8em;
+    left: 0.35em;
+    padding-right: 0.2em;
+    padding-left: 0.2em;
+}
+
+.paypal {
+    display: block;
+    margin: 0 auto;
+}
+
+// Or selectively include components
+// @import
+//   "foundation/components/accordion",
+//   "foundation/components/alert-boxes",
+//   "foundation/components/block-grid",
+//   "foundation/components/breadcrumbs",
+//   "foundation/components/button-groups",
+//   "foundation/components/buttons",
+//   "foundation/components/clearing",
+//   "foundation/components/dropdown",
+//   "foundation/components/dropdown-buttons",
+//   "foundation/components/flex-video",
+//   "foundation/components/forms",
+//   "foundation/components/grid",
+//   "foundation/components/inline-lists",
+//   "foundation/components/joyride",
+//   "foundation/components/keystrokes",
+//   "foundation/components/labels",
+//   "foundation/components/magellan",
+//   "foundation/components/orbit",
+//   "foundation/components/pagination",
+//   "foundation/components/panels",
+//   "foundation/components/pricing-tables",
+//   "foundation/components/progress-bars",
+//   "foundation/components/reveal",
+//   "foundation/components/side-nav",
+//   "foundation/components/split-buttons",
+//   "foundation/components/sub-nav",
+//   "foundation/components/switches",
+//   "foundation/components/tables",
+//   "foundation/components/tabs",
+//   "foundation/components/thumbs",
+//   "foundation/components/tooltips",
+//   "foundation/components/top-bar",
+//   "foundation/components/type",
+//   "foundation/components/offcanvas",
+//   "foundation/components/visibility";

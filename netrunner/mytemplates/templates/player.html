@@ -1,0 +1,188 @@
+{%extends "base.html" %}
+{% block windowtitle %}{{player.first_name}} {{player.last_name}}{% endblock %}
+{%block players%}class="active"{%endblock%}
+{%block content %}
+{%load mathfilters%}
+<div class="row">
+    <div class="small-12 columns">
+        <h1>{{player.first_name}} {{player.last_name}}</h1>
+        {%if league %}
+        <p><strong>Current league position is {{position}}/{{players}}</strong> - {% now "j F Y" %}.
+        <table width="100%">
+            <tr>
+                <th>Position</th>
+                <th>Overall ELO</th>
+                <th>Games Played</th>
+                <th>Unique Opponents</th>
+                <th class="show-for-medium-up">Corp ELO</th>
+                <th class="show-for-medium-up">Corp Wins</th>
+                <th class="show-for-large-up">Corp Losses</th>
+                <th class="show-for-large-up">Flatline Wins</th>
+                <th class="show-for-large-up">Corp Timed Wins</th>
+                <th class="show-for-medium-up">Runner ELO</th>
+                <th class="show-for-medium-up">Runner Wins</th>
+                <th class="show-for-large-up">Runner Losses</th>
+                <th class="show-for-large-up">Mill Wins</th>
+                <th class="show-for-large-up">Runner Timed Wins</th>
+            </tr>
+            <tr>
+                <td>{{position}}</td>
+                <td>{{league.corp_start_elo_rank|add:league.corp_elo_points|add:league.runner_start_elo_rank|add:league.runner_elo_points|intdiv:2}}</td>
+                <td>{{league.corp_wins|add:league.corp_loses|add:league.runner_wins|add:league.runner_loses}}
+                <td>{{league.unique_opponents.count}}</td>
+                <td class="show-for-medium-up">{{league.corp_start_elo_rank|add:league.corp_elo_points}}</td>
+                <td class="show-for-medium-up">{{league.corp_wins}}</td>
+                <td class="show-for-large-up">{{league.corp_loses}}</td>
+                <td class="show-for-large-up">{{league.flatline_wins}}</td>
+                <td class="show-for-large-up">{{league.corp_timed_wins}}</td>
+                <td class="show-for-medium-up">{{league.runner_start_elo_rank|add:league.runner_elo_points}}</td>
+                <td class="show-for-medium-up">{{league.runner_wins}}</td>
+                <td class="show-for-large-up">{{league.runner_loses}}</td>
+                <td class="show-for-large-up">{{league.mill_wins}}</td>
+                <td class="show-for-large-up">{{league.runner_timed_wins}}</td>
+            </tr>
+        </table>
+        {%else%}
+        <p>There is no data for the current league.</p>
+        {%endif%}
+        </p>
+        <hr/>
+    </div>
+</div>
+<div class="row">
+    {%if user.is_authenticated and player.username == user.username %}
+        <div class="small-12 large-4 columns">
+            {%if new_league %}
+                <h3>{{new_league.name}}</h3>
+                {%if user.is_authenticated and player.username == user.username and not registered%}
+                    <form action="/registerforleague/" method="post">{% csrf_token %}
+                        <p>You are <strong>not registered</strong> for the {{new_league.name}}. The league starts on <strong>{{new_league.start_date|date:"d F Y"}}</strong>.</p>
+                        <p>Registration is open until <strong>{{new_league.registration_end_date|date:"d F Y"}}</strong>.</p>
+                        <input type="hidden" name="player" value="{{player.id}}" />
+                        <input type="hidden" name="league" value="{{new_league.id}}" />
+                        <input type="checkbox" name="confirm_register" value="confirm_register"><label for="checkbox">I want to play!</label>
+                        <input class="button" type="submit" value="Register Now" />
+                    </form>
+                {%elif user.is_authenticated and player.username == user.username and registered%}
+                    <p>You are registered for the {{new_league.name}}, starting on <strong>{{new_league.start_date|date:"d F Y"}}</strong>!</p>
+                {%endif%}
+                <hr/>
+            {%endif%}
+            <h3>Subscription</h3>
+            {%if not subscribed %}
+            <p>If you would like to help with the running costs of both this site and the <a href="http://forum.netrunner-cambridge.com">forum</a> you can do so by <strong>subscribing</strong> for <strong>£1 per month</strong>.</p>
+            <p>
+            <form width="100%" class="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="9K593TNWECHGG">
+            <input class="paypal" type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+            </form>
+            </p>
+            <p>Your contribution will be used to help pay for the server that hosts the forum software.</p>
+            <p>If there is any surplus after all expenses have been met then it will go towards a <strong>prize fund</strong> for the league and any other tournaments that we run!</p>
+            <p>If you have any questions about the subscription or how your money will be used then please ask on the <a href="http://forum.netrunner-cambridge.com">forum</a>.</p>
+            <p><strong>Thank you for your support!</strong></p>
+            {%else%}
+            <p>You are subscribed - <strong>Thank you for your support!</strong></p>
+            <h5>Cancel</h5>
+            <p>If you wish, you can always <strong>cancel</strong> your subscription by clicking on the link below.</p>
+            <p>
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_subscr-find&alias=8JLK2YGS8D4PU">
+            <img src="https://www.paypalobjects.com/en_GB/i/btn/btn_unsubscribe_SM.gif" BORDER="0"/>
+            </a>
+            </p>
+            {%endif%}
+        </div>
+    {%endif%}
+    {%if user.is_authenticated and player.username == user.username%}
+    <div class="small-12 large-8 columns">
+    {%else%}
+    <div class="small-12 columns">
+    {%endif%}
+        <ul class="tabs" data-tab>
+            <li class="tab-title active"><a href="#corp">Corp Results</a></li>
+            <li class="tab-title"><a href="#runner">Runner Results</a></li>
+            {%if user.is_authenticated and player.username == user.username and unvalidated|length > 0 %}
+            <li class="tab-title"><a href="#unvalidated-games">Unvalidated Games</a></li>
+            {%endif%}
+        </ul>
+        <div class="tabs-content">
+            <div class="content active" id="corp">
+                <p>Most used Corp identity is <strong>{{fav_corp}}</strong>.
+                    <table width="100%">
+                        <tr>
+                            <th>Date</th>
+                            <th>Identity</th>
+                            <th>Opponent</th>
+                            <th>Result</th>
+                        </tr>
+                        {%for game in corp|dictsortreversed:"date" %}
+                        <tr>
+                            <td>{{game.date|date:"d F Y"}}</td>
+                            <td>{{game.identity}}</td>
+                            <td><a href="/players/{{game.opponent.first_name.lower}}-{{game.opponent.last_name.lower}}">{{game.opponent.first_name}} {{game.opponent.last_name}} ({{game.opponent_identity}})</a></td>
+                            {%if game.result.name == "Corp Agenda Points" or game.result.name == "Corp Flatline"%}
+                                <td class="result-win">{{game.result.name}}</td>
+                            {%else%}
+                                <td class="result-loss">{{game.result.name}}</td>
+                            {%endif%}
+                        </tr>
+                        {%endfor%}
+                    </table>
+                </p>
+            </div>
+            <div class="content" id="runner">
+                <p>Most used Runner identity is <strong>{{fav_runner}}</strong>.
+                    <table width="100%">
+                        <tr>
+                            <th>Date</th>
+                            <th>Identity</th>
+                            <th>Opponent</th>
+                            <th>Result</th>
+                        </tr>
+                        {%for game in runner|dictsortreversed:"date" %}
+                        <tr>
+                            <td>{{game.date|date:"d F Y"}}</td>
+                            <td>{{game.identity}}</td>
+                            <td><a href="/players/{{game.opponent.first_name.lower}}-{{game.opponent.last_name.lower}}">{{game.opponent.first_name}} {{game.opponent.last_name}} ({{game.opponent_identity}})</a></td>
+                            {%if game.result.name == "Runner Agenda Points" or game.result.name == "Runner Mill" %}
+                                <td class="result-win">{{game.result.name}}</td>
+                            {%else%}
+                                <td class="result-loss">{{game.result.name}}</td>
+                            {%endif%}
+                        </tr>
+                        {%endfor%}
+                    </table>
+                </p>
+            </div>
+            <div class="content" id="unvalidated-games">
+                {%if user.is_authenticated and player.username == user.username and unvalidated|length > 0  %}
+                <form action="/validategames/" method="post">{% csrf_token %}
+                <table width="100%">
+                    <tr>
+                        <th>Validate</th>
+                        <th>Date</th>
+                        <th>Identity</th>
+                        <th>Opponent</th>
+                        <th>Result</th>
+                    </tr>
+                    <tr>
+                    {%for game in unvalidated|dictsortreversed:"date" %}
+                    <tr>
+                        <td><input type="checkbox" name="validated-games" value="{{game.id}}"></td>
+                        <td>{{game.date|date:"d F Y"}}</td>
+                        <td>{{game.identity}}</td>
+                        <td><a href="/players/{{game.opponent.first_name.lower}}-{{game.opponent.last_name.lower}}">{{game.opponent.first_name}} {{game.opponent.last_name}} ({{game.opponent_identity}})</a></td>
+                        <td>{{game.result.name}}</td>
+                    </tr>
+                    {%endfor%}
+                    </tr>
+                </table>
+                <input class="button" type="submit" value="Validate Games" />
+                </form>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
