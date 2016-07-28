@@ -31,3 +31,5 @@ The account system requires the following packages to be available:
 
 - `pip install Django --upgrade`
 
+## Postgres
+
