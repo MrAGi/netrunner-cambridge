@@ -12,7 +12,7 @@ from datetime import datetime
 
 def league_registration(request, player=None):
     now = datetime.now()
-    leagues = MeetupLeague.objects.filter(start_date__gte=now).order_by('start_date')
+    leagues = MeetupLeague.objects.filter(end_date__gte=now).order_by('start_date')
     if len(leagues) > 0:
         current_league = leagues[0]
     else:
