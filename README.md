@@ -33,3 +33,8 @@ The account system requires the following packages to be available:
 
 ## Postgres
 
+## Testing Locally
+
+- Start the netcam virtual environment
+- Run `heroku local`
+
